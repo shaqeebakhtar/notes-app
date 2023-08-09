@@ -5,8 +5,8 @@ type Props = {};
 
 const Page = (props: Props) => {
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="bg-white border border-slate-300 rounded-md p-8 w-full max-w-[25rem]">
+    <div className="flex items-center justify-center h-screen mx-6">
+      <div className="bg-white border border-slate-300 rounded-md p-6 md:p-8 w-full max-w-[25rem]">
         <h3 className="font-bold text-2xl mb-6">Create your Account</h3>
         <div className="my-3 text-sm">
           <label htmlFor="name" className="block text-slate-500 mb-1">
