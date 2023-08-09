@@ -39,12 +39,12 @@ const Header = (props: Props) => {
             <span>fullname@email.com</span>
           </div>
           <div className="rounded-full overflow-hidden h-10 w-10 object-cover">
-            <img
+            <Image
               src={"https://source.unsplash.com/random/?user"}
               alt="avatar"
               height={40}
               width={40}
-            ></img>
+            ></Image>
           </div>
         </div>
         <button className="bg-red-100 hover:bg-red-200 transition ease-in-out text-red-600 font-semibold py-2 px-4 rounded-md text-sm">
