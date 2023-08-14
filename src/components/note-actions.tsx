@@ -4,9 +4,17 @@ import { useState } from "react";
 import EditNote from "./popups/edit-note";
 import DeleteNote from "./popups/delete-note";
 
-type Props = {};
+type Props = {
+  note: {
+    id: string;
+    title: string;
+    description: string;
+    tags: string[];
+    createdAt: Date;
+  };
+};
 
-const NoteActions = (props: Props) => {
+const NoteActions = ({ note }: Props) => {
   const [editNoteModal, setEditNoteModal] = useState<boolean>(false);
   const [deleteNoteModal, setDeleteNoteModal] = useState<boolean>(false);
 
@@ -64,8 +72,10 @@ const NoteActions = (props: Props) => {
           </svg>
         </button>
       </div>
-      {editNoteModal && <EditNote handleClose={handleClose} />}
-      {deleteNoteModal && <DeleteNote handleClose={handleClose} />}
+      {editNoteModal && <EditNote handleClose={handleClose} note={note} />}
+      {deleteNoteModal && (
+        <DeleteNote handleClose={handleClose} noteId={note.id} />
+      )}
     </>
   );
 };

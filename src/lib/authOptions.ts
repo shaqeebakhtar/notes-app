@@ -4,6 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { hash } from "@/utils/hash";
 
 export const authOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   adapters: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
@@ -36,7 +37,6 @@ export const authOptions = {
   session: {
     strategy: "jwt",
   },
-  secret: process.env.NEXT_AUTH_SECRET,
   pages: {
     signIn: "/auth/login",
   },

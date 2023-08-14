@@ -1,30 +1,33 @@
 import NoteActions from "./note-actions";
 
-type Props = {};
+type Props = {
+  note: {
+    id: string;
+    title: string;
+    description: string;
+    tags: string[];
+    createdAt: Date;
+  };
+};
 
-const NoteCard = (props: Props) => {
+const NoteCard = ({ note }: Props) => {
+  const dateOptions = { year: "numeric", month: "long", day: "numeric" };
+
   return (
     <div className="bg-white border border-slate-300 rounded-md p-6">
       <div className="flex items-center justify-between mb-3">
         <div className="text-xs text-slate-500">
-          <span>27th Aug, 2023</span>
+          <span>{note.createdAt.toString()}</span>
         </div>
 
-        <NoteActions />
+        <NoteActions note={note} />
       </div>
-      <h3 className="font-semibold">Note Title</h3>
+      <h3 className="font-semibold">{note.title}</h3>
       <div className="my-2">
-        <p className="text-slate-500 text-sm text">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rerum nisi
-          ipsum asperiores harum delectus fuga, iure et laudantium distinctio,
-          ut soluta blanditiis dolorum accusamus placeat.
-        </p>
+        <p className="text-slate-500 text-sm text">{note.description}</p>
       </div>
       <div className="flex gap-6 items-center mt-4 text-xs text-purple-700">
-        <span>#note-tag</span>
-        <span>#note-tag</span>
-        <span>#note-tag</span>
-        <span>#note-tag</span>
+        {note.tags && note.tags.map((tag) => <span key={tag}>#{tag}</span>)}
       </div>
     </div>
   );

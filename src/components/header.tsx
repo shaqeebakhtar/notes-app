@@ -2,13 +2,16 @@
 
 import { signOut } from "next-auth/react";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
 
-type Props = {};
+type Props = {
+  user: {
+    name?: string | null | undefined;
+    email?: string | null | undefined;
+    image?: string | null | undefined;
+  };
+};
 
-const Header = (props: Props) => {
-  const { data: session } = useSession();
-
+const Header = ({ user }: Props) => {
   return (
     <div className="px-5 py-4 lg:px-12 mx-auto bg-white shadow-sm flex items-center justify-between sticky">
       <div className="relative">
@@ -40,8 +43,8 @@ const Header = (props: Props) => {
       <div className="flex items-center justify-between gap-6">
         <div className="flex items-center gap-2 text-sm">
           <div className="flex flex-col text-right">
-            <p className="font-semibold leading-4">{session?.user?.name}</p>
-            <span>{session?.user?.email}</span>
+            <p className="font-semibold leading-4">{user?.name}</p>
+            <span>{user?.email}</span>
           </div>
           <div className="rounded-full overflow-hidden h-10 w-10 object-cover">
             <Image

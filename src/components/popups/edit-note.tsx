@@ -1,10 +1,48 @@
-import React from "react";
+"use client";
+
+import { handleEditNote } from "@/utils/handle-editnote";
+import React, { useState } from "react";
 
 type Props = {
   handleClose: () => void;
+  note: {
+    id: string;
+    title: string;
+    description: string;
+    tags: string[];
+    createdAt: Date;
+  };
 };
 
-const EditNote = ({ handleClose }: Props) => {
+interface Note {
+  id: string;
+  title: string;
+  description: string;
+  tags: string[];
+}
+
+const EditNote = ({ handleClose, note }: Props) => {
+  const [noteData, setNoteData] = useState<Note>({
+    id: note.id,
+    title: note.title,
+    description: note.description,
+    tags: note.tags,
+  });
+
+  const [error, setError] = useState("");
+
+  const onEditNote = async () => {
+    if (!noteData.title || !noteData.description || !noteData.tags) {
+      return setError("all fields are required");
+    }
+
+    const { note, editNoteErr } = await handleEditNote(noteData);
+
+    if (editNoteErr) setError(editNoteErr);
+
+    if (note) handleClose();
+  };
+
   return (
     <div className="flex items-center justify-center h-screen absolute inset-0 bg-slate-900 bg-opacity-75">
       <div className="w-[25rem] p-6 md:p-8 bg-white border border-slate-300 rounded-md">
@@ -18,6 +56,10 @@ const EditNote = ({ handleClose }: Props) => {
             type="text"
             id="title"
             placeholder="Title"
+            onChange={(e) =>
+              setNoteData({ ...noteData, title: e.target.value })
+            }
+            value={noteData.title}
             className="w-full border border-slate-300 rounded-md py-2 px-4 focus:outline-purple-700"
           />
         </div>
@@ -29,6 +71,10 @@ const EditNote = ({ handleClose }: Props) => {
             type="text"
             id="tags"
             placeholder="Add Tags"
+            onChange={(e) =>
+              setNoteData({ ...noteData, tags: e.target.value.split(" ") })
+            }
+            value={noteData.tags.join(" ")}
             className="w-full border border-slate-300 rounded-md py-2 px-4 focus:outline-purple-700"
           />
         </div>
@@ -40,9 +86,14 @@ const EditNote = ({ handleClose }: Props) => {
           <textarea
             id="description"
             placeholder="Add Description"
+            onChange={(e) =>
+              setNoteData({ ...noteData, description: e.target.value })
+            }
+            value={noteData.description}
             className="w-full max-h-[8rem] border border-slate-300 rounded-md py-2 px-4 focus:outline-purple-700"
           />
         </div>
+        {error && <p className="text-sm text-red-600">{error}</p>}
 
         <div className="flex gap-3 items-center justify-end mt-4">
           <button
@@ -51,7 +102,10 @@ const EditNote = ({ handleClose }: Props) => {
           >
             Cancel
           </button>
-          <button className="bg-purple-600 text-sm hover:bg-purple-700 transition ease-in-out text-white font-semibold py-2 px-4 rounded-md">
+          <button
+            className="bg-purple-600 text-sm hover:bg-purple-700 transition ease-in-out text-white font-semibold py-2 px-4 rounded-md"
+            onClick={onEditNote}
+          >
             Update Note
           </button>
         </div>
