@@ -7,7 +7,7 @@ interface Note {
   title: string;
   description: string;
   tags: string[];
-  createdAt: string;
+  createdAt: Date;
 }
 
 const Notes = () => {
